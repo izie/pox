@@ -445,7 +445,7 @@ class SplitThreadedServer(ThreadingMixIn, HTTPServer):
                      {'root':local_path}, True);
 
 
-def launch (address='', port=8000, static=False):
+def launch (address='', port=80, static=False):
   httpd = SplitThreadedServer((address, int(port)), SplitterRequestHandler)
   core.register("WebServer", httpd)
   httpd.set_handler("/", CoreHandler, httpd, True)
