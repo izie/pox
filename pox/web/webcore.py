@@ -445,7 +445,7 @@ class SplitThreadedServer(ThreadingMixIn, HTTPServer):
                      {'root':local_path}, True);
 
 
-def launch (address='', port=8000, static=False):
+def launch (address='', port=80, static=False):
   httpd = SplitThreadedServer((address, int(port)), SplitterRequestHandler)
   core.register("WebServer", httpd)
   httpd.set_handler("/", CoreHandler, httpd, True)
@@ -482,6 +482,13 @@ def launch (address='', port=8000, static=False):
       pass
     log.info("Server quit")
 
-  thread = threading.Thread(target=run)
-  thread.daemon = True
-  thread.start()
+  def go_up (event):
+    thread = threading.Thread(target=run)
+    thread.daemon = True
+    thread.start()
+
+  def go_down (event):
+    httpd.shutdown()
+
+  core.addListenerByName("GoingUpEvent", go_up)
+  core.addListenerByName("GoingDownEvent", go_down)
