@@ -27,6 +27,7 @@ class LoadBalancer (EventMixin):
     def __init__ (self, ip, mac, port):
       log.info("__init__1")
       self.ip = IPAddr(ip)
+      log.info("ip : "+self.ip.toStr())
       self.mac = EthAddr(mac)
       self.port = port
 
@@ -112,6 +113,7 @@ class LoadBalancer (EventMixin):
     msg.hard_timeout = HARD_TIMEOUT
     msg.buffer_id = None
     msg.data = event.ofp # Forward the incoming packet
+    log("size:" + event.ofp.size())
 
     # Set packet matching
     # Match (in_port, MAC src, MAC dst, IP src, IP dst)
@@ -132,6 +134,18 @@ class LoadBalancer (EventMixin):
     self.connection.send(msg)
 
     log.info("Installing %s <-> %s" % (packet.next.srcip, server.ip))
+    
+  def send_packet (self, buffer_id, raw_data, out_port, in_port):
+    log.info("send_packet")
+    #Sends a packet out of the specified switch port.
+    msg = of.ofp_packet_out()
+    msg.in_port = in_port
+    msg.data = raw_data
+    # Add an action to send to the specified port
+    action = of.ofp_action_output(port = out_port)
+    msg.actions.append(action)
+    # Send message to switch
+    self.connection.send(msg)  
 
   def _handle_PacketIn (self, event):
     log.info("_handle_PacketIn")
@@ -165,6 +179,7 @@ class LoadBalancer (EventMixin):
         return
 
       log.debug("Receive an IPv4 packet from %s" % packet.next.srcip)
+      #log.debug("Packet Size: " % packet.next.length)
       self.handle_request(packet, event)
 
 
