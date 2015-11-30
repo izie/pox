@@ -25,6 +25,7 @@ class LoadBalancer (EventMixin):
 
   class Server:
     def __init__ (self, ip, mac, port):
+      log.info("__init__1")
       self.ip = IPAddr(ip)
       self.mac = EthAddr(mac)
       self.port = port
@@ -33,21 +34,24 @@ class LoadBalancer (EventMixin):
       return','.join([str(self.ip), str(self.mac), str(self.port)])
 
   def __init__ (self, connection):
+    log.info("__init__2")
     self.connection = connection
     self.listenTo(connection)
     # Initialize the server list
     self.servers = [
       self.Server('10.0.0.1', '00:00:00:00:00:01', 1),
-      self.Server('10.0.0.2', '00:00:00:00:00:02', 2)]
+      self.Server('10.0.0.2', '00:00:00:00:00:02', 2),
+      self.Server('10.0.0.3', '00:00:00:00:00:03', 3)]
     self.last_server = 0
 
   def get_next_server (self):
+    log.info("get_next_server")
     # Round-robin load the servers
     self.last_server = (self.last_server + 1) % len(self.servers)
     return self.servers[self.last_server]
 
   def handle_arp (self, packet, in_port):
-
+    log.info("handle_arp")
     # Get the ARP request from packet
     arp_req = packet.next
 
@@ -74,7 +78,7 @@ class LoadBalancer (EventMixin):
     self.connection.send(msg)
 
   def handle_request (self, packet, event):
-
+    log.info("handle_request")
     # Get the next server to handle the request
     server = self.get_next_server()
 
@@ -130,6 +134,7 @@ class LoadBalancer (EventMixin):
     log.info("Installing %s <-> %s" % (packet.next.srcip, server.ip))
 
   def _handle_PacketIn (self, event):
+    log.info("_handle_PacketIn")
     packet = event.parse()
 
     if packet.type == packet.LLDP_TYPE or packet.type == packet.IPV6_TYPE:
