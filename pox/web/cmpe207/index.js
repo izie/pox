@@ -1,8 +1,20 @@
-///////////////////////////////////////////////
-// server.js
-var http = require('http');
-http.createServer(function (req, res) {
-  res.writeHead(200, {'Content-Type': 'text/html'});
-  res.end('Hello World\n');
-}).listen(3000, '0.0.0.0');
-console.log('Server running at http://0.0.0.0:3000/');
+var express     = require('express'),
+    app         = express();
+
+app.get('/', function(req, res) {
+  res.sendfile('switcher.html');
+});
+
+app.get('/small', function(req, res) {
+  res.sendfile('small.mp4');
+});
+
+app.get('/medium', function(req, res) {
+  res.sendfile('medium.mp4');
+});
+
+app.get('/large', function(req, res) {
+  res.sendfile('large.mp4');
+});
+
+app.listen(3000,'0.0.0.0');
