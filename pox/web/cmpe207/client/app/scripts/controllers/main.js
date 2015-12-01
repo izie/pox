@@ -8,7 +8,7 @@
  * Controller of the clientApp
  */
 angular.module('clientApp')
-  .controller('MainCtrl', function ($scope) {
+  .controller('MainCtrl', function ($scope,$http) {
     $scope.images = [];
     $scope.imageUrl = [];
     $scope.imageUrl[0] = 'http://10.0.0.254:3000/small';
