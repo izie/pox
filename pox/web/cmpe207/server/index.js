@@ -6,15 +6,15 @@ app.get('/', function(req, res) {
 });
 
 app.get('/small', function(req, res) {
-  res.sendfile('small.mp4');
+  res.sendfile('small.jpg');
 });
 
-app.get('/medium', function(req, res) {
-  res.sendfile('medium.mp4');
+app.get('/4k', function(req, res) {
+  res.sendfile('5k.jpg');
 });
 
-app.get('/large', function(req, res) {
-  res.sendfile('large.mp4');
+app.get('/5k', function(req, res) {
+  res.sendfile('5k_2.jpg');
 });
 
 app.listen(3000,'0.0.0.0');
