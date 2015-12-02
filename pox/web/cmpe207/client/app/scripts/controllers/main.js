@@ -10,10 +10,7 @@
 angular.module('clientApp')
   .controller('MainCtrl', function ($scope,$http) {
     $scope.images = [];
-    $scope.imageUrl = [];
-    $scope.imageUrl[0] = 'http://10.0.0.254:3000/small';
-    $scope.imageUrl[1] = 'http://10.0.0.254:3000/4k';
-    $scope.imageUrl[2] = 'http://10.0.0.254:3000/5k';
+    $scope.imageUrl = 'http://10.0.0.254:3000/api/v1/image/';
     $scope.imgNo = 5;
     $scope.isLoading = false;
     $scope.difftime = 0;
@@ -26,13 +23,11 @@ angular.module('clientApp')
       $scope.images = [];
       for(var i = 0 ; i < parseInt($scope.imgNo) ; i++){
         var temp = {};
-        temp.url = $scope.imageUrl[Math.floor(Math.random()*3)]+"?dummy="+(new Date().getUTCMilliseconds())+i;
+        temp.url = $scope.imageUrl+(i%11+1)+"?id="+(new Date().getUTCMilliseconds())+i;
         $scope.images.push(temp);
       }
       $scope.isLoading = false;
       var end = new Date().getUTCMilliseconds();
       $scope.difftime = end - start;
-      console.log("start : "+start);
-      console.log("end : "+end);
     }
   });

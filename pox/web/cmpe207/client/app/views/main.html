@@ -13,7 +13,7 @@
   <div class="col-lg-12">
     <h2 ng-hide="isLoading">Loading Completed</h2>
     <h2 ng-show="isLoading">Loading..</h2>
-    <h5>Loading Time: {{difftime}} ms</h5>
+    <h5>Loading Time: {{$rootScope.difftime}} ms</h5>
     <img ng-repeat="img in images" lazy-img="{{img.url}}" width="100" height="50"/>
 
   </div>
