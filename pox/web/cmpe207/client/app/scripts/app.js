@@ -15,7 +15,8 @@ angular
     'ngResource',
     'ngRoute',
     'ngSanitize',
-    'ngTouch'
+    'ngTouch',
+    'angularLazyImg'
   ])
   .config(function ($routeProvider) {
     $routeProvider
