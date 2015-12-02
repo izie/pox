@@ -11,9 +11,9 @@ angular.module('clientApp')
   .controller('MainCtrl', function ($scope,$http) {
     $scope.images = [];
     $scope.imageUrl = [];
-    $scope.imageUrl[0] = 'http://localhost:3000/small';
-    $scope.imageUrl[1] = 'http://localhost:3000/4k';
-    $scope.imageUrl[2] = 'http://localhost:3000/5k';
+    $scope.imageUrl[0] = 'http://10.0.0.254:3000/small';
+    $scope.imageUrl[1] = 'http://10.0.0.254:3000/4k';
+    $scope.imageUrl[2] = 'http://10.0.0.254:3000/5k';
     $scope.imgNo = 5;
     $scope.isLoading = false;
     $scope.difftime = 0;
