@@ -36,7 +36,7 @@ app.get('/5k', function(req, res) {
 });
 
 app.listen(3000,'0.0.0.0');
-
+console.log("Server is listening on 3000");
 
 function sendContent(req, res) {
     var localPath = 'some-file';
