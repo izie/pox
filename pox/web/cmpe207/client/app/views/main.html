@@ -14,7 +14,7 @@
     <h2 ng-hide="isLoading">Loading Completed</h2>
     <h2 ng-show="isLoading">Loading..</h2>
     <h5>Loading Time: {{difftime}} ms</h5>
-    <p ng-repeat="img in images"><img lazy-img="{{img.url}}" width="200" height="100"/></p>
+    <img ng-repeat="img in images" lazy-img="{{img.url}}" width="100" height="50"/>
 
   </div>
 </div>
